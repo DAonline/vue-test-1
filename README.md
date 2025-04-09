@@ -8,6 +8,8 @@ Dieses Projekt stellt ein Task Board dar und wurde als Testaufgabe im Rahmen ein
 
 - [Projektübersicht](#projektübersicht)
 - [Installation & Setup](#installation--setup)
+- [Voraussetzungen](#voraussetzungen)
+- [Installation & Setup](#installation--setup)
 - [Verfügbare Befehle](#verfügbare-befehle)
 - [Aufgabenübersicht](#aufgabenübersicht)
 - [Merge Request Prozess](#merge-request-prozess)
@@ -25,7 +27,16 @@ Das Task Board bietet folgende Funktionalitäten:
 - Drag-and-Drop-Funktionalitäten zur intuitiven Verwaltung von Aufgaben.
 
 ---
-
+ 
+## Voraussetzungen
+ 
+Bevor Sie beginnen, stellen Sie sicher, dass die folgenden Tools auf Ihrem System installiert sind:
+ 
+- **Node.js:** Version 18.x oder höher empfohlen. Sie können Node.js von [nodejs.org](https://nodejs.org/) herunterladen.
+- **npm:** Wird normalerweise zusammen mit Node.js installiert. Überprüfen Sie die Installation mit `npm -v`.
+ 
+---
+ 
 ## Installation & Setup
 
 Folgen Sie den folgenden Schritten, um das Projekt lokal einzurichten und auszuführen:
