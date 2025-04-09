@@ -30,14 +30,20 @@ Das Task Board bietet folgende Funktionalitäten:
 
 Folgen Sie den folgenden Schritten, um das Projekt lokal einzurichten und auszuführen:
 
-1.  **Abhängigkeiten installieren:**
+1. **Projekt runterladen/clonen:**
+    Führe git clone aus:
+    ```bash
+    git clone git@github.com:DAonline/vue-test-1.git
+    ```
+
+2.  **Abhängigkeiten installieren:**
     Navigieren Sie in das Projektverzeichnis und führen Sie folgenden Befehl aus:
 
     ```bash
     npm install
     ```
 
-2.  **Entwicklungsserver starten:**
+3.  **Entwicklungsserver starten:**
     Startet die Anwendung im Entwicklungsmodus mit Hot-Reload:
 
     ```bash
