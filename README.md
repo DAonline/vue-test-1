@@ -33,7 +33,8 @@ Folgen Sie den folgenden Schritten, um das Projekt lokal einzurichten und auszuf
 1. **Projekt runterladen/clonen:**
     Führe git clone aus:
     ```bash
-    git clone git@github.com:DAonline/vue-test-1.git
+    git clone https://github.com/DAonline/vue-test-1.git
+    cd vue-test-1
     ```
 
 2.  **Abhängigkeiten installieren:**
@@ -68,7 +69,7 @@ Folgen Sie den folgenden Schritten, um das Projekt lokal einzurichten und auszuf
 
 ## Aufgabenübersicht
 
-Die Aufgaben im Rahmen dieses Workshops sind in der folgenden Tabelle zusammengefasst:
+Die Aufgaben im Rahmen dieses Tests sind in der folgenden Tabelle zusammengefasst:
 
 | ID | Titel | Beschreibung | Status |
 |:--|:------|:-------------|:-------|
