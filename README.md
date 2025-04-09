@@ -44,40 +44,6 @@ Folgen Sie den folgenden Schritten, um das Projekt lokal einzurichten und auszuf
     npm run dev
     ```
 
-3.  **Produktionsbuild erstellen:**
-    Kompiliert und minimiert das Projekt für den Produktionseinsatz:
-
-    ```bash
-    npm run build
-    ```
-
-4.  **Vorschau des Produktionsbuilds:**
-    Testen Sie den erstellten Build, indem Sie einen lokalen Server starten:
-
-    ```bash
-    npm run preview
-    ```
-
-5.  **Unit-Tests ausführen:**
-    Verifizieren Sie die Funktionalität mittels Vitest:
-
-    ```bash
-    npm run test:unit
-    ```
-
-6.  **Code linten:**
-    Prüfen Sie den Code auf Stil- und Syntaxfehler mit ESLint und Oxlint:
-
-    ```bash
-    npm run lint
-    ```
-
-7.  **Code formatieren:**
-    Formatieren Sie den Code automatisch mit Prettier:
-    ```bash
-    npm run format
-    ```
-
 ---
 
 ## Verfügbare Befehle
@@ -105,7 +71,7 @@ Die Aufgaben im Rahmen dieses Workshops sind in einzelne Schritte unterteilt. Je
   - **Beschreibung:** Erstellen von modularen, wiederverwendbaren Task-Komponenten für das Task Board.
   - **Status:** In Bearbeitung.
 - **[ ] 3 – Styling:**
-  - **Beschreibung:** Implementieren von responsiven CSS-Stilen, um das Task Board für verschiedene Bildschirmgrößen zu optimieren.
+  - **Beschreibung:** Implementieren von responsiven CSS-Stilen, um das Task Board für verschiedene Bildschirmgrößen zu optimieren. (Bonus) Task Karten mit Styles verbessern.
   - **Status:** Offen.
 - **[ ] 4 – Composition API:**
   - **Beschreibung:** Auslagern der Task-Logik in die Composition API, um den Code modular und wartbar zu gestalten.
@@ -130,7 +96,7 @@ Die Aufgaben im Rahmen dieses Workshops sind in einzelne Schritte unterteilt. Je
 
 ---
 
-## Merge Request Prozess
+## Pull Request Prozess
 
 Um einen strukturierten und nachvollziehbaren Arbeitsablauf zu gewährleisten, beachten Sie bitte folgendes Vorgehen:
 
@@ -157,10 +123,7 @@ Um einen strukturierten und nachvollziehbaren Arbeitsablauf zu gewährleisten, b
     ```
 
 5.  **Merge Request erstellen:**
-    Erstellen Sie einen Merge Request (MR) von Ihrem Feature-Branch zum `main` (oder Zielbranch).
-    **Hinweis:** Beschreiben Sie im MR detailliert die vorgenommenen Änderungen und listen Sie die bearbeiteten Aufgaben auf.
-
-6.  **Review und Feedback:**
-    Weisen Sie den Merge Request zur Überprüfung an die zuständigen Teammitglieder zu. Nehmen Sie gegebenenfalls Feedback an und passen Sie Ihren Code an.
+    Erstellen Sie einen Pull Request (PR) von Ihrem Feature-Branch zum `main` (oder Zielbranch).
+    **Hinweis:** Beschreiben Sie im PR detailliert die vorgenommenen Änderungen und listen Sie die bearbeiteten Aufgaben auf.
 
 ---
