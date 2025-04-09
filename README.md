@@ -18,7 +18,7 @@ Dieses Projekt stellt ein Task Board dar und wurde als Testaufgabe im Rahmen ein
 
 Das Task Board bietet folgende Funktionalitäten:
 
-- Darstellung von Aufgaben in übersichtlichen Spalten (z. B. “To Do”, “In Bearbeitung”, “Erledigt”).
+- Darstellung von Aufgaben in übersichtlichen Spalten (z. B. "To Do", "In Bearbeitung", "Erledigt").
 - Wiederverwendbare Komponenten, die an verschiedene Anwendungsfälle anpassbar sind.
 - Responsive Designs, die für unterschiedliche Bildschirmgrößen optimiert sind.
 - Unterstützung moderner Vue 3 Features wie die Composition API und Teleport für modale Dialoge.
@@ -68,37 +68,21 @@ Folgen Sie den folgenden Schritten, um das Projekt lokal einzurichten und auszuf
 
 ## Aufgabenübersicht
 
-Die Aufgaben im Rahmen dieses Workshops sind in einzelne Schritte unterteilt. Jede Aufgabe hat eine eindeutige ID und einen Status:
+Die Aufgaben im Rahmen dieses Workshops sind in der folgenden Tabelle zusammengefasst:
 
-- **[x] 1 – Projekt Setup:**
-  - **Beschreibung:** Initialisieren des Vue-Projekts mit TypeScript und TSX.
-  - **Status:** Abgeschlossen.
-- **[/] 2 – Wiederverwendbare Komponenten:**
-  - **Beschreibung:** Erstellen von modularen, wiederverwendbaren Task-Komponenten für das Task Board.
-  - **Status:** In Bearbeitung.
-- **[ ] 3 – Styling:**
-  - **Beschreibung:** Implementieren von responsiven CSS-Stilen, um das Task Board für verschiedene Bildschirmgrößen zu optimieren. (Bonus) Task Karten mit Styles verbessern.
-  - **Status:** Offen.
-- **[ ] 4 – Composition API:**
-  - **Beschreibung:** Auslagern der Task-Logik in die Composition API, um den Code modular und wartbar zu gestalten.
-  - **Status:** Offen.
-- **[ ] 5 – Drag and Drop:**
-  - **Beschreibung:** Hinzufügen einer Drag-and-Drop-Funktionalität, damit Aufgaben per Drag & Drop zwischen den Spalten verschoben werden können.
-  - **Status:** Offen.
-- **[ ] 6 – Kontextmenü:**
-  - **Beschreibung:** Implementierung eines Kontextmenüs für Aufgaben, mit dem der Aufgabenstatus geändert werden kann.
-  - **Status:** Offen.
-- **[ ] 7 – Teleportiertes Modal für neue Aufgaben:**
-  - **Beschreibung:** Einsatz von Vue Teleport, um ein modales Dialogfenster außerhalb der Hauptkomponente zu rendern. Das Modal soll die Eingabe von Aufgabendetails ermöglichen und Aufgaben standardmäßig dem “To Do”-Status zuordnen. Es muss sich schließen, wenn außerhalb geklickt wird oder der Benutzer den Vorgang abbricht.
-  - **Status:** Offen.
-- **[ ] 8 – Validierung:**
-  - **Beschreibung:** Sicherstellen, dass keine leeren Aufgaben erstellt werden können.
-  - **Status:** Offen.
-- **[ ] 9 – Testing:**
-  - **Beschreibung:** Ergänzung von Unit-Tests, um zu überprüfen, dass das Hinzufügen leerer Aufgaben nicht möglich ist, während das Hinzufügen von Aufgaben mit gültigen Daten funktioniert.
-  - **Status:** Offen.
+| ID | Titel | Beschreibung | Status |
+|:--|:------|:-------------|:-------|
+| 1 | Projekt Setup | Initialisieren des Vue-Projekts mit TypeScript und | Abgeschlossen |
+| 2 | Wiederverwendbare Komponenten | Erstellen von modularen, wiederverwendbaren Task-Komponenten für das Task Board. | In Bearbeitung |
+| 3 | Styling | Implementieren von responsiven CSS-Stilen, um das Task Board für verschiedene Bildschirmgrößen zu optimieren. (Bonus) Task Karten mit Styles verbessern. | Offen |
+| 4 | Composition API | Auslagern der Task-Logik in die Composition API, um den Code modular und wartbar zu gestalten. | Offen |
+| 5 | Drag and Drop | Hinzufügen einer Drag-and-Drop-Funktionalität, damit Aufgaben per Drag & Drop zwischen den Spalten verschoben werden können. | Offen |
+| 6 | Kontextmenü | Implementierung eines Kontextmenüs für Aufgaben, mit dem der Aufgabenstatus geändert werden kann. | Offen |
+| 7 | Teleportiertes Modal für neue Aufgaben | Einsatz von Vue Teleport, um ein modales Dialogfenster außerhalb der Hauptkomponente zu rendern. Das Modal soll die Eingabe von Aufgabendetails ermöglichen und Aufgaben standardmäßig dem "To Do"-Status zuordnen. Es muss sich schließen, wenn außerhalb geklickt wird oder der Benutzer den Vorgang abbricht. | Offen |
+| 8 | Validierung | Sicherstellen, dass keine leeren Aufgaben erstellt werden können. | Offen |
+| 9 | Testing | Ergänzung von Unit-Tests, um zu überprüfen, dass das Hinzufügen leerer Aufgaben nicht möglich ist, während das Hinzufügen von Aufgaben mit gültigen Daten funktioniert. | Offen |
 
-**Hinweis:** Die Statusangaben (abgeschlossen, in Bearbeitung, offen) dienen als Orientierung und beschreiben den IST-Zustand dieses Branches. Sollte es Änderungen geben, wird es entsprechend angepasst.
+**Hinweis:** Die Statusangaben dienen als Orientierung und beschreiben den IST-Zustand dieses Branches. Sollte es Änderungen geben, wird es entsprechend angepasst.
 
 ---
 
