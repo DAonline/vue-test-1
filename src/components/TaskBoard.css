@@ -1,0 +1,103 @@
+.task-board {
+  height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-board h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+.board-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.column {
+  background: #f5f6fa;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.column h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e1e1e1;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 5px;
+}
+
+.task-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.task-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.task-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.task-card {
+  background: white;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+}
+
+.task-card h4 {
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+}
+
+.task-card p {
+  color: #666;
+  margin: 0 0 10px 0;
+  font-size: 0.9em;
+}
+
+.task-card .date {
+  color: #999;
+  font-size: 0.8em;
+}
+
+@media (max-width: 768px) {
+  .board-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .task-board {
+    height: auto;
+    min-height: 100vh;
+  }
+}
