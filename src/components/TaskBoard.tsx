@@ -1,138 +1,223 @@
-import { defineComponent, ref } from 'vue'
-import './TaskBoard.css'
+//TaskBoard.tsx
 
-enum TaskState {
-  TODO = 'todo',
-  IN_PROGRESS = 'in-progress',
-  DONE = 'done'
-}
-
-interface Task {
-  id: number
-  title: string
-  description: string
-  state: TaskState
-  createdAt: Date
-}
+import { defineComponent, ref, onMounted } from 'vue';
+import './TaskBoard.css';
+import { TaskState } from '../data/models/task';
+import type { Task } from '../data/models/task';
+import { Teleport } from 'vue';
+import * as taskApi from '../data/apis/taskApi';
+import TaskColumn from './TaskColumn';
 
 export default defineComponent({
   name: 'TaskBoard',
   setup() {
-    const tasks = ref<Task[]>([
-      {
-        id: 1,
-        title: 'Setup Project',
-        description: 'Initialize Vue project with TypeScript and TSX',
-        state: TaskState.DONE,
-        createdAt: new Date('2024-04-08')
-      },
-      {
-        id: 2,
-        title: 'Reusable Components',
-        description: 'Build reusable task components for the task board',
-        state: TaskState.IN_PROGRESS,
-        createdAt: new Date('2024-04-08')
-      },
-      {
-        id: 3,
-        title: 'Styling',
-        description: 'Implement CSS styles for the task board, to cover page for all screen sizes',
-        state: TaskState.TODO,
-        createdAt: new Date('2024-04-08')
-      },
-      {
-        id: 4,
-        title: 'Composition API',
-        description: 'Export task functionality to composition api and reuse it in task board.',
-        state: TaskState.TODO,
-        createdAt: new Date('2024-04-08')
-      },
-      {
-        id: 5,
-        title: 'Drag and Drop',
-        description: 'Implement drag and drop functionality for tasks',
-        state: TaskState.TODO,
-        createdAt: new Date('2024-04-08')
-      },
-      {
-        id: 6,
-        title: 'Context Menu',
-        description: 'Add context menu for tasks to select state. The task should \
-         be moved to the selected state automatically.',
-        state: TaskState.TODO,
-        createdAt: new Date('2024-04-08')
-      },
-      {
-        id: 7,
-        title: 'Implement Teleported Modal for New Task',
-        description: 'Use Vue Teleport to render a modal outside the main task board component. ' +
-                     'The modal should allow users to enter task details and save the task to the "To Do" state. ' +
-                     'Ensure it closes when users click outside or choose to cancel.',
-        state: TaskState.TODO,
-        createdAt: new Date('2024-04-08')
-      },
-      {
-        id: 8,
-        title: 'Validation',
-        description: 'Make sure empty tasks cannot be added to the task board.',
-        state: TaskState.TODO,
-        createdAt: new Date('2024-04-08')
-      },
-      {
-        id: 9,
-        title: 'Testing',
-        description: 'Add unit test, to ensure adding empy task is not possible, but adding task with data is possible.',
-        state: TaskState.TODO,
-        createdAt: new Date('2024-04-08')
-      }
-    ])
+    const tasks = ref<Task[]>([]);
+    const contextMenuVisible = ref(false);
+    const contextMenuPosition = ref({ x: 0, y: 0 });
+    const selectedTask = ref<Task | null>(null);
+    const modalVisible = ref(false);
+    const newTask = ref({ title: '', description: '' });
+    const errorMessage = ref('');
+    const loadingVisible = ref(false);
 
-    const getTasksByState = (state: Task['state']) => {
-      return tasks.value.filter(task => task.state === state)
-    }
+
+
+    const fetchTasks = async () => {
+      loadingVisible.value = true;
+      try {
+        tasks.value = await taskApi.fetchTasks();
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+      loadingVisible.value = false;
+    };
+
+    const getTasksByState = (state: TaskState) => {
+      return tasks.value.filter(task => task.state === state);
+    };
+
+    const onDragStart = (event: DragEvent, task: Task) => {
+      event.dataTransfer?.setData('taskId', String(task.id));
+    };
+
+    const onDrop = async (event: DragEvent, targetState: TaskState) => {
+      const taskId = event.dataTransfer?.getData('taskId');
+      const task = tasks.value.find((task: Task) => String(task.id) === taskId);
+
+      if (task) {
+        loadingVisible.value = true;
+        try {
+          const updatedTask = await taskApi.updateTaskState(task.id, targetState);
+
+          task.state = updatedTask.state;
+          event.preventDefault();
+        } catch (error) {
+          console.error('Error updating task state:', error);
+        }
+        loadingVisible.value = false;
+      }
+    };
+
+    const onDragOver = (event: DragEvent) => {
+      event.preventDefault();
+    };
+
+
+    const onRightClick = (event: MouseEvent, task: Task) => {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log(`Right-clicked on task: ${task.title}`);
+
+      selectedTask.value = task;
+      contextMenuPosition.value = { x: event.clientX, y: event.clientY };
+      contextMenuVisible.value = true;
+    };
+
+    const changeTaskState = async (state: TaskState) => {
+      if (selectedTask.value) {
+        loadingVisible.value = true;
+        try {
+          selectedTask.value = await taskApi.updateTaskState(selectedTask.value.id, state);
+        } catch (error) {
+          console.error('Error changing task state:', error);
+        }
+        window.location.reload();
+
+      }
+    };
+
+
+    const closeContextMenu = () => {
+      contextMenuVisible.value = false;
+    };
+
+    const showModal = () => {
+      modalVisible.value = true;
+    };
+
+    const closeModal = () => {
+      modalVisible.value = false;
+      newTask.value = { title: '', description: '' };  // Reset the form
+      errorMessage.value = '';  // Reset error message
+    };
+
+    const deleteTask = async (taskId: number) => {
+      loadingVisible.value = true;
+
+      try {
+        await taskApi.deleteTask(taskId);
+        tasks.value = tasks.value.filter(task => task.id !== taskId);
+      } catch (error) {
+        console.error('Error deleting task:', error);
+      }
+      loadingVisible.value = false;
+
+    };
+
+
+    const saveTask = async () => {
+      if (newTask.value.title && newTask.value.description) {
+        try {
+          const task = await taskApi.createTask(newTask.value.title, newTask.value.description);
+          tasks.value.push(task);
+          closeModal();
+        } catch (error) {
+          errorMessage.value = 'Failed to create task';
+          console.error('Error saving task:', error);
+        }
+      }
+    };
+
+    onMounted(() => {
+      fetchTasks();
+      document.addEventListener('click', closeContextMenu);
+    });
 
     return () => (
       <div class="task-board">
+        {loadingVisible.value && (
+          <div class="overlay">
+            <div class="spinner"></div>
+          </div>
+        )}
+        <button class="add-task-btn" onClick={showModal}>
+         +
+        </button>
+
         <h2>Workshop Task Board</h2>
         <div class="board-columns">
-          <div class="column">
-            <h3>To Do</h3>
-            <div class="task-list">
-              {getTasksByState(TaskState.TODO).map(task => (
-                <div key={task.id} class="task-card">
-                  <h4>{task.title}</h4>
-                  <p>{task.description}</p>
-                  <span class="date">{task.createdAt.toLocaleDateString()}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div class="column">
-            <h3>In Progress</h3>
-            <div class="task-list">
-              {getTasksByState(TaskState.IN_PROGRESS).map(task => (
-                <div key={task.id} class="task-card">
-                  <h4>{task.title}</h4>
-                  <p>{task.description}</p>
-                  <span class="date">{task.createdAt.toLocaleDateString()}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div class="column">
-            <h3>Done</h3>
-            <div class="task-list">
-              {getTasksByState(TaskState.DONE).map(task => (
-                <div key={task.id} class="task-card">
-                  <h4>{task.title}</h4>
-                  <p>{task.description}</p>
-                  <span class="date">{task.createdAt.toLocaleDateString()}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <TaskColumn
+            state={TaskState.PENDING}
+            tasks={getTasksByState(TaskState.PENDING)}
+            onDragOver={onDragOver}
+            onDrop={onDrop}
+            onDragStart={onDragStart}
+            onContextMenu={onRightClick}
+          />
+          <TaskColumn
+            state={TaskState.IN_PROGRESS}
+            tasks={getTasksByState(TaskState.IN_PROGRESS)}
+            onDragOver={onDragOver}
+            onDrop={onDrop}
+            onDragStart={onDragStart}
+            onContextMenu={onRightClick}
+          />
+          <TaskColumn
+            state={TaskState.DONE}
+            tasks={getTasksByState(TaskState.DONE)}
+            onDragOver={onDragOver}
+            onDrop={onDrop}
+            onDragStart={onDragStart}
+            onContextMenu={onRightClick}
+          />
         </div>
+        {contextMenuVisible.value && selectedTask.value && (
+          <div class="context-menu" style={{ top: `${contextMenuPosition.value.y}px`, left: `${contextMenuPosition.value.x}px` }}>
+
+            <>
+              <button onClick={() => changeTaskState(TaskState.PENDING)}>Move to To Do</button>
+              <button onClick={() => changeTaskState(TaskState.IN_PROGRESS)}>Move to In Progress</button>
+              <button onClick={() => changeTaskState(TaskState.DONE)}>Move to Done</button>
+              <button
+                class="delete-button"
+                onClick={() => {
+                  if (selectedTask.value) {
+                    deleteTask(selectedTask.value.id);
+                    contextMenuVisible.value = false;
+                  }
+                }}
+              ><p>Delete Task</p>
+
+              </button>
+            </>
+
+          </div>
+        )}
+        {modalVisible.value && (
+          <Teleport to="body">
+            <div class="modal-overlay" onClick={closeModal}>
+              <div class="modal-content" onClick={(e) => e.stopPropagation()}>
+                <h3>Create New Task</h3>
+                <form onSubmit={(e) => { e.preventDefault(); saveTask(); }}>
+                  <label>
+                    Title:
+                    <input type="text" v-model={newTask.value.title} required />
+                  </label>
+                  <label>
+                    Description:
+                    <textarea v-model={newTask.value.description} required />
+                  </label>
+                  {errorMessage.value && <p class="error-message">{errorMessage.value}</p>}
+                  <div class="modal-buttons">
+                    <button type="submit" class="save-button">Save Task</button>
+                    <button type="button" onClick={closeModal} class="cancel-button">Cancel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </Teleport>
+        )}
       </div>
-    )
+    );
   }
-})
+});
