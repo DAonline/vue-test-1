@@ -1,6 +1,3 @@
-Certainly! You can set up a GitHub Action to automatically delete a branch when a merge request (pull request) is closed. Below is an example of a GitHub Actions workflow file that accomplishes this:
-
-Code kopieren
 name: Delete Branch on PR Close
 
 on:
